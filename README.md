@@ -3,8 +3,8 @@
 Este projeto é uma aplicação web full-stack desenvolvida como uma solução completa para um desafio de validação de ponta a ponta. Ele demonstra a construção de um sistema coeso com cadastro, autenticação e gerenciamento de perfil de usuário.
 
 ### **🎥 Vídeo de Demonstração**
-
-\[Insira o link para o vídeo de demonstração aqui\]
+https://github.com/lightniing1/test-cadastro-usuario/blob/main/demo.mp4
+https://youtu.be/z2mGPk14E00
 
 ### **1\. Visão da Solução**
 
