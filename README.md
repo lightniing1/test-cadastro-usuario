@@ -22,40 +22,31 @@ Toda a aplicação é containerizada com **Docker**, permitindo que o ambiente c
 ### **2\. Arquitetura**
 
 A arquitetura da solução é baseada em um modelo desacoplado de cliente-servidor, onde o Frontend (cliente) consome os serviços expostos pela API REST do Backend (servidor).
-
+```mermaid
 graph TD
-    subgraph Frontend (Angular)
-        F[SPA - Interface do Usuário]
+    subgraph Frontend Angular
+        F[Frontend Angular]
+        F --> FN[Servido por Nginx]
+        F --> FI[Interface do Usuário]
+        F --> FG[Gerenciamento de Estado]
     end
 
-    subgraph Backend (Spring Boot)
-        B[Lógica de Negócio e Endpoints RESTful]
+    subgraph Backend Spring Boot
+        B[Backend Spring Boot]
+        B --> BL[Lógica de Negócio]
+        B --> BE[Endpoints RESTful]
+        B --> BA[Autenticação com JWT]
     end
 
-    subgraph Database (PostgreSQL)
-        D[Persistência de Dados]
+    subgraph Banco de Dados PostgreSQL
+        D[Banco de Dados PostgreSQL]
+        D --> DP[Persistência de Dados]
+        D --> DS[Schema gerenciado pelo Flyway]
     end
 
     F -- HTTP/S (REST API) --> B
     B -- TCP/IP --> D
-
-    style F fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#f9f,stroke:#333,stroke-width:2px
-    style D fill:#f9f,stroke:#333,stroke-width:2px
-    linkStyle 0 stroke:#666,stroke-width:2px,fill:none,color:#666
-    linkStyle 1 stroke:#666,stroke-width:2px,fill:none,color:#666
-
-    F -. Servido por Nginx .- F_det
-    F_det[Interface do Usuário]
-    F_det_2[Gerenciamento de Estado]
-    B -. Lógica de Negócio .- B_det
-    B_det[Lógica de Negócio]
-    B_det_2[Endpoints RESTful]
-    B_det_3[Autenticação com JWT]
-    D -. Persistência de Dados .- D_det
-    D_det[Persistência de Dados]
-    D_det_2[Schema gerenciado pelo Flyway]
-
+```
 * **Frontend (Angular)**: Responsável por toda a interface e experiência do usuário. É uma SPA servida por um contêiner Nginx para máxima performance.  
 * **Backend (Spring Boot)**: Expõe uma API RESTful para ser consumida pelo frontend. Gerencia a lógica de negócio, a segurança com Spring Security e a comunicação com o banco de dados.  
 * **Banco de Dados (PostgreSQL)**: Banco de dados relacional escolhido para a persistência dos dados dos usuários. As migrações do schema são gerenciadas pelo Flyway, garantindo consistência e versionamento.
