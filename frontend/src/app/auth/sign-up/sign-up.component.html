@@ -1,0 +1,48 @@
+<div class="form-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Sign Up</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" type="text">
+          <app-error-message [control]="form.get('name')!"></app-error-message>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email">
+          <app-error-message [control]="form.get('email')!"></app-error-message>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password">
+          <app-error-message [control]="form.get('password')!"></app-error-message>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput formControlName="confirmPassword" type="password">
+          <app-error-message [control]="form.get('confirmPassword')!"></app-error-message>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading()">
+          @if(isLoading()) {
+            <mat-spinner [diameter]="24"></mat-spinner>
+          } @else {
+            Sign Up
+          }
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <p>Already have an account? <a routerLink="/signin">Sign In</a></p>
+    </mat-card-actions>
+  </mat-card>
+</div>

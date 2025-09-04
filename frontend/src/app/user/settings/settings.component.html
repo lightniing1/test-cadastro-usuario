@@ -1,0 +1,80 @@
+<div class="settings-container">
+  @if (isProfileLoading()) {
+  <mat-card>
+    <div class="card-content">
+      <div class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading your profile...</p>
+      </div>
+    </div>
+  </mat-card>
+  } @else if (hasProfileError()) {
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Profile Settings</mat-card-title>
+    </mat-card-header>
+
+    <div class="card-content">
+      <div class="message error-message">
+        <mat-icon>error_outline</mat-icon>
+        <span>Could not load profile. Please try again later.</span>
+      </div>
+    </div>
+
+    <mat-card-actions>
+      <button mat-flat-button color="warn" (click)="authService.signOut()">
+        <mat-icon>logout</mat-icon>
+        Sign Out
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  }
+
+  @else {
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Profile Settings</mat-card-title>
+    </mat-card-header>
+
+    <div class="card-content">
+      <form [formGroup]="form" (ngSubmit)="onUpdate()">
+        @if (successMessage()) {
+        <div class="message success-message">
+          <mat-icon>check_circle</mat-icon>
+          <span>{{ successMessage() }}</span>
+        </div>
+        }
+
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" type="text">
+          <app-error-message [control]="form.get('name')!"></app-error-message>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email">
+          <app-error-message [control]="form.get('email')!"></app-error-message>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isLoading()">
+          @if (isLoading()) {
+          <mat-spinner diameter="24"></mat-spinner>
+          <span>Updating...</span>
+          } @else {
+          <mat-icon>save</mat-icon>
+          <span>Update Profile</span>
+          }
+        </button>
+      </form>
+    </div>
+
+    <mat-card-actions>
+      <button mat-flat-button color="warn" (click)="authService.signOut()">
+        <mat-icon>logout</mat-icon>
+        <span>Sign Out</span>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  }
+</div>
